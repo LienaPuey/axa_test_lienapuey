@@ -165,7 +165,7 @@ app.post('/login', (req, response) => {
         //Check if user exists
         if (arrData.length == 0) {
 
-            response.send("User not found");
+            response.send({message:"User not found"});
 
         } else if (arrData[0].role == 'user') {
 
