@@ -2,7 +2,6 @@
 var fs = require('fs');
 var express = require('express');
 var bodyParser = require('body-parser');
-var bcrypt = require('bcrypt');
 var cors = require('cors');
 var process = require('process');
 var jwt = require('jsonwebtoken');
@@ -158,7 +157,7 @@ app.get('/api/admin/users/:policy', verifyToken, (req, response) => {
 });
 
 
-//Login
+//LOGIN
 app.post('/login', (req, response) => {
     request.get(api1, (err, res, body) => {
         var data = JSON.parse(body);
@@ -181,8 +180,8 @@ app.post('/login', (req, response) => {
     });
 });
 
-//FUNCTIONS
 
+//FUNCTIONS
 // Verify Token
 function verifyToken(req, res, next) {
     // Get authorization header value
@@ -200,6 +199,8 @@ function verifyToken(req, res, next) {
         res.sendStatus(403);
     }
 }
-console.log("Escuchando puerto");
+
+//PORT
+console.log("Listening on port 3000");
 
 app.listen(3000);
