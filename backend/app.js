@@ -32,6 +32,7 @@ app.use(bodyParser.json());
 var api1 = "http://www.mocky.io/v2/5808862710000087232b75ac"; //url clients
 var api2 = "http://www.mocky.io/v2/580891a4100000e8242b75c5"; //url policies
 
+//Gets list of clients
 app.get('/api/clients/:email', verifyToken, (req, response) => {
     jwt.verify(req.token, 'secretkey', function (err, authData) {
         if (err) {
@@ -40,25 +41,91 @@ app.get('/api/clients/:email', verifyToken, (req, response) => {
             request.get(api1, (err, res, body) => {
                 var data = JSON.parse(body);
                 var dataParsed = data.clients;
-                var resultClients = dataParsed.find(element =>{ return element.email === req.params.email });
+                var resultClients = dataParsed.find(element => { return element.email === req.params.email });
                 console.log(resultClients);
                 response.send(resultClients)
             })
-
-    
         }
     })
+});
 
-}); //Gets list of clients
-
-
+//Gets list of policies with verification
 app.get('/api/policies', verifyToken, (req, response) => {
     request.get(api2, (err, res, body) => { response.send(body) })
-}); //Gets list of policies
+});
+
+//ADMIN USAGE 
+//Gets list of policies linked to a user name
+
+app.get('/api/admin/policies/:name', verifyToken, (req, response) => {
+    jwt.verify(req.token, 'secretkey', function (err, decoded) {
+        if (err) {
+            response.send('Forbidden')
+        } else {
+            //Gets client's data
+            request.get(api1, (err, res, body) => {
+                var data = JSON.parse(body);
+                var dataParsed = data.clients;
+                var clientData = dataParsed.find(element => { return element.name === req.params.name });
+                //Err if the username doesn't exist
+                if (typeof clientData != "object") {
+                    response.send("This username doesn't match any client.");
+                } else {
+                    //Gets client's ID by client's name
+                    var idClient = clientData.id;
+                    request.get(api2, (err, res, body) => {
+                        var data = JSON.parse(body);
+                        var dataParsed = data.policies;
+                        //Get list of policies by client's ID
+                        var policiesList = dataParsed.filter(element => element.clientId === idClient);
+                        //Err = if the user doesn't have any policies
+                        if (policiesList.length == 0) {
+                            response.send("This user doesn't have any policies.");
+                        } else {
+
+                            response.send(policiesList);
+                        }
+                    });
+
+                }
+            });
+        }
+    });
+});
+
+//Get the user linked to a policy number
+app.get('/api/admin/users/:policy', verifyToken, (req, response) => {
+    jwt.verify(req.token, 'secretkey', function (err, decoded) {
+        if (err) {
+            response.send('Forbidden')
+        } else {
+            // Gets policy's data by policy ID
+            var policyId = req.params.policy;
+            request.get(api2, (err, res, body) => {
+                var data = JSON.parse(body);
+                var dataParsed = data.policies;
+                var resultPolicies = dataParsed.find(element => { return element.id === policyId });
+                //ERR the policy number doesn't exist
+                if (typeof resultPolicies != "object") {
+                    response.send("This policy number doesn't exist.");
+                }else{
+                //Gets User Data by policy ID
+                var userData = resultPolicies.clientId;
+                request.get(api1, (err, res, body) => {
+                    var data = JSON.parse(body);
+                    var dataParsed = data.clients;
+                    var resultClients = dataParsed.find(element => { return element.id === userData });
+                    console.log(resultClients);
+                    response.send(resultClients);
+                })}
+            })
+        }
+    })
+});
 
 
-
-app.post('/login', (req, response) => {//login
+//Login
+app.post('/login', (req, response) => {
     request.get(api1, (err, res, body) => {
         var data = JSON.parse(body);
         var arrData = data.clients.filter(element => element.email === req.body.email);
@@ -80,33 +147,25 @@ app.post('/login', (req, response) => {//login
     });
 });
 
-
-
 //FUNCTIONS
 
-// FORMAT OF TOKEN:
-// Authorization: Bearer <token>
 // Verify Token
 function verifyToken(req, res, next) {
     // Get authorization header value
     const bearerHeader = req.headers['authorization'];
     // Check if bearer is undefined
     if (typeof bearerHeader !== 'undefined') {
+        //Separates the token from the Bearer and takes position 1 which is the actual token
         const bearer = bearerHeader.split(' ');
         const bearerToken = bearer[1];
         req.token = bearerToken;
-        // Next middleware
+        // Calls the next middleware
         next();
     } else {
         // Forbidden status
         res.sendStatus(403);
     }
-
 }
-
-
-
-
 console.log("Escuchando puerto");
 
 app.listen(3000);
