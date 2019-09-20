@@ -1,3 +1,4 @@
+//IMPORTS
 var fs = require('fs');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -13,24 +14,58 @@ var request = require('request');
 //SERVER
 var app = express();
 
-//secrets
-// var secretsRaw = fs.readFileSync('secrets.json');
-// var secrets = JSON.parse(secretsRaw);
-// var miClave = secrets.jwt_clave;
-
-//midleware
+//MIDLEWARE
 app.use(cors());
 app.use(bodyParser.json());
-// app.use(expressjwt({
-//     secret: miClave
-// }).unless({
-//     path: ["/login", "/register"]
-// })); //checks if token is in the path except login and register
-
 
 //CALLS 
 var api1 = "http://www.mocky.io/v2/5808862710000087232b75ac"; //url clients
 var api2 = "http://www.mocky.io/v2/580891a4100000e8242b75c5"; //url policies
+
+//USER USAGE
+//Get data filtered by username
+app.get('/api/userName/:userName', verifyToken, (req, response) => {
+    jwt.verify(req.token, 'secretkey', function (err, authData) {
+        if (err) {
+            response.sendStatus(403);
+        } else {
+            let nameUser = req.params.userName;
+            request.get(api1, (err, res, body) => {
+                let data = JSON.parse(body);
+                let dataParsed = data.clients;
+                let userData = dataParsed.find(element => { return element.name === nameUser });
+                if (typeof userData != "object") {
+                    response.send("This username doesn't match any client.");
+                } else {
+                    response.send(userData);
+                }
+            });
+
+        }
+    });
+});
+
+//Get data by user ID
+app.get('/api/userId/:userId', verifyToken, (req, response) => {
+    jwt.verify(req.token, 'secretkey', function (err, authData) {
+        if (err) {
+            response.sendStatus(403);
+        } else {
+            let clientId = req.params.userId;
+            request.get(api1, (err, res, body) => {
+                let data = JSON.parse(body);
+                let dataParsed = data.clients;
+                let userData = dataParsed.find(element => { return element.id === clientId });
+                if (typeof userData != "object") {
+                    response.send("The ID doesn't belong to any user.");
+                } else {
+                    response.send(userData);
+                }
+            });
+
+        }
+    });
+});
 
 //Gets list of clients
 app.get('/api/clients/:email', verifyToken, (req, response) => {
@@ -39,19 +74,18 @@ app.get('/api/clients/:email', verifyToken, (req, response) => {
             response.sendStatus(403);
         } else {
             request.get(api1, (err, res, body) => {
-                var data = JSON.parse(body);
-                var dataParsed = data.clients;
-                var resultClients = dataParsed.find(element => { return element.email === req.params.email });
-                console.log(resultClients);
-                response.send(resultClients)
-            })
+                let data = JSON.parse(body);
+                let dataParsed = data.clients;
+                let resultClients = dataParsed.find(element => { return element.email === req.params.email });
+                response.send(resultClients);
+            });
         }
-    })
+    });
 });
 
 //Gets list of policies with verification
 app.get('/api/policies', verifyToken, (req, response) => {
-    request.get(api2, (err, res, body) => { response.send(body) })
+    request.get(api2, (err, res, body) => { response.send(body) });
 });
 
 //ADMIN USAGE 
@@ -60,7 +94,7 @@ app.get('/api/policies', verifyToken, (req, response) => {
 app.get('/api/admin/policies/:name', verifyToken, (req, response) => {
     jwt.verify(req.token, 'secretkey', function (err, decoded) {
         if (err) {
-            response.send('Forbidden')
+            response.send('Forbidden');
         } else {
             //Gets client's data
             request.get(api1, (err, res, body) => {
@@ -97,7 +131,7 @@ app.get('/api/admin/policies/:name', verifyToken, (req, response) => {
 app.get('/api/admin/users/:policy', verifyToken, (req, response) => {
     jwt.verify(req.token, 'secretkey', function (err, decoded) {
         if (err) {
-            response.send('Forbidden')
+            response.send('Forbidden');
         } else {
             // Gets policy's data by policy ID
             var policyId = req.params.policy;
@@ -108,19 +142,19 @@ app.get('/api/admin/users/:policy', verifyToken, (req, response) => {
                 //ERR the policy number doesn't exist
                 if (typeof resultPolicies != "object") {
                     response.send("This policy number doesn't exist.");
-                }else{
-                //Gets User Data by policy ID
-                var userData = resultPolicies.clientId;
-                request.get(api1, (err, res, body) => {
-                    var data = JSON.parse(body);
-                    var dataParsed = data.clients;
-                    var resultClients = dataParsed.find(element => { return element.id === userData });
-                    console.log(resultClients);
-                    response.send(resultClients);
-                })}
-            })
+                } else {
+                    //Gets User Data by policy ID
+                    var userData = resultPolicies.clientId;
+                    request.get(api1, (err, res, body) => {
+                        var data = JSON.parse(body);
+                        var dataParsed = data.clients;
+                        var resultClients = dataParsed.find(element => { return element.id === userData });
+                        response.send(resultClients);
+                    });
+                }
+            });
         }
-    })
+    });
 });
 
 
