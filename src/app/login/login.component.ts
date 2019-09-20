@@ -24,7 +24,7 @@ sendData(){
     }else if (Object.keys(apiResult)[0] == "user"){
       this._router.navigateByUrl('/user');
     } else{
-      alert("This user doesn't exists.");
+      alert("This user doesn't exist.");
       return;
     }
   });

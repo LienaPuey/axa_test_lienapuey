@@ -1,3 +1,10 @@
-<p>
-  user works!
-</p>
+<div class="square">
+  <div class="straight">
+    <input [(ngModel)]="username" type="text" name="" id="" placeholder="Username"> <br>
+    <button (click)="searchUsername()" class="btn btn-primary">Search by username</button>
+  </div>
+  <div class="straight">
+    <input [(ngModel)]="userId" type="text" name="" id="" placeholder="User ID"> <br>
+    <button (click)="searchId()" class="btn btn-primary">Search by ID</button>
+  </div>
+</div>

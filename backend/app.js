@@ -34,8 +34,9 @@ app.get('/api/userName/:userName', verifyToken, (req, response) => {
                 let dataParsed = data.clients;
                 let userData = dataParsed.find(element => { return element.name === nameUser });
                 if (typeof userData != "object") {
-                    response.send("This username doesn't match any client.");
+                    response.send({message: "This username doesn't match any client."});
                 } else {
+                    userData.message = "Ok";
                     response.send(userData);
                 }
             });
@@ -56,7 +57,7 @@ app.get('/api/userId/:userId', verifyToken, (req, response) => {
                 let dataParsed = data.clients;
                 let userData = dataParsed.find(element => { return element.id === clientId });
                 if (typeof userData != "object") {
-                    response.send("The ID doesn't belong to any user.");
+                    response.send({message: "The ID doesn't belong to any user."});
                 } else {
                     response.send(userData);
                 }
@@ -93,7 +94,7 @@ app.get('/api/policies', verifyToken, (req, response) => {
 app.get('/api/admin/policies/:name', verifyToken, (req, response) => {
     jwt.verify(req.token, 'secretkey', function (err, decoded) {
         if (err) {
-            response.send('Forbidden');
+            response.send({message: 'Forbidden'});
         } else {
             //Gets client's data
             request.get(api1, (err, res, body) => {
@@ -102,7 +103,7 @@ app.get('/api/admin/policies/:name', verifyToken, (req, response) => {
                 var clientData = dataParsed.find(element => { return element.name === req.params.name });
                 //Err if the username doesn't exist
                 if (typeof clientData != "object") {
-                    response.send("This username doesn't match any client.");
+                    response.send({message: "This username doesn't match any client."});
                 } else {
                     //Gets client's ID by client's name
                     var idClient = clientData.id;
@@ -113,7 +114,7 @@ app.get('/api/admin/policies/:name', verifyToken, (req, response) => {
                         var policiesList = dataParsed.filter(element => element.clientId === idClient);
                         //Err = if the user doesn't have any policies
                         if (policiesList.length == 0) {
-                            response.send("This user doesn't have any policies.");
+                            response.send({message: "This user doesn't have any policies."});
                         } else {
 
                             response.send(policiesList);
@@ -130,7 +131,7 @@ app.get('/api/admin/policies/:name', verifyToken, (req, response) => {
 app.get('/api/admin/users/:policy', verifyToken, (req, response) => {
     jwt.verify(req.token, 'secretkey', function (err, decoded) {
         if (err) {
-            response.send('Forbidden');
+            response.send({message: 'Forbidden'});
         } else {
             // Gets policy's data by policy ID
             var policyId = req.params.policy;
@@ -140,7 +141,7 @@ app.get('/api/admin/users/:policy', verifyToken, (req, response) => {
                 var resultPolicies = dataParsed.find(element => { return element.id === policyId });
                 //ERR the policy number doesn't exist
                 if (typeof resultPolicies != "object") {
-                    response.send("This policy number doesn't exist.");
+                    response.send({message: "This policy number doesn't exist."});
                 } else {
                     //Gets User Data by policy ID
                     var userData = resultPolicies.clientId;
