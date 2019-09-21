@@ -1,3 +1,23 @@
-<p>
-  home works!
-</p>
+<div class="square">
+
+  <div class="straight">
+    <input [(ngModel)]="username" type="text" name="username" placeholder="Username"> <br>
+    <button (click)="searchUsername()" class="btn btn-primary">Search by username</button>
+  </div>
+
+  <div class="straight">
+    <input [(ngModel)]="userId" type="text" name="userid" placeholder="User ID"> <br>
+    <button (click)="searchId()" class="btn btn-primary">Search by ID</button>
+  </div>
+
+  <div class="straight">
+    <input [(ngModel)]="policyId" type="text" name="policiename" placeholder="Username "> <br>
+    <button (click)="searchPolicyId()" class="btn btn-primary">Search policies by username</button>
+  </div>
+
+  <div class="straight">
+    <input [(ngModel)]="policyName" type="text" name="userbypolicy" placeholder="Policy number"> <br>
+    <button (click)="searchPolicyName()" class="btn btn-primary">Search user by policy number</button>
+  </div>
+
+</div>

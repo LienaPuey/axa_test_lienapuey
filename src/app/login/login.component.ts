@@ -10,24 +10,39 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  
-  body = {email: ""}
+  mail: string="";
+  body:Object = {};
+  apiResult;
+  failed=false;
 
-  constructor(private _router : Router, private _http : HttpClient) { }
+  sendData() {
+    this.body = { email: this.mail }
+    if (this.mail == "undefined") { return };
+    this._http.post('http://localhost:3000/login', this.body).subscribe(data => {
+      this.apiResult = data;
+      if (this.apiResult.message == "ok") {
+        switch (this.apiResult.role) {
+          case "admin":
+            localStorage.setItem('admin', `${ this.apiResult.token }`)
+            this._router.navigateByUrl('/admin');
+            break;
+          case "user":
+            localStorage.setItem('user', `${ this.apiResult.token }`)
+            this._router.navigateByUrl('/user');
+            break;
+          default:
+            return;
+        }
+      } else {
+        this.failed = true;
+        return;
+      }
+    });
+  }
+
+  constructor(private _router: Router, private _http: HttpClient) { }
 
   ngOnInit() {
   }
-sendData(){
-  this._http.post("http://localhost:3000/login", this.body).subscribe(apiResult => {
-    if (Object.keys(apiResult)[0] == "admin"){
-      this._router.navigateByUrl('/admin');
-    }else if (Object.keys(apiResult)[0] == "user"){
-      this._router.navigateByUrl('/user');
-    } else{
-      alert("This user doesn't exist.");
-      return;
-    }
-  });
-  
-};
+
 }

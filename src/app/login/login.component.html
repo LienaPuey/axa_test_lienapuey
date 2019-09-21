@@ -2,7 +2,8 @@
   <img class="mb-4" src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72"
     height="72">
   <h1 class="h3 mb-3 font-weight-normal">Please enter your username</h1>
-  <label for="inputEmail" class="sr-only">Username</label>
-  <input [(ngModel)]= "body.email" name="email" type="email" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+  <label for="inputEmail" class="sr-only">Email</label>
+  <input [(ngModel)]= "mail" name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+  <p *ngIf="failed" style="color: red">This user doesn't exist.</p>
   <button (click)="sendData()" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </div>
