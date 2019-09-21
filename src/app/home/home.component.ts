@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,14 +14,20 @@ export class HomeComponent implements OnInit {
   data: any;
   httpOptions: any;
   token: string;
-  policyId:string;
-  policyName:string;
-
-  checkToken(){
-    if(localStorage.getItem('user') == null){
-     return false
-    }else{
-      this.token= localStorage.getItem('user')
+  policyId: string;
+  policyName: string;
+  failed = false;
+  failed2 = false;
+  failed3 = false;
+  failed4 = false;
+  user;
+  userexists = false;
+  array;
+  checkToken() {
+    if (localStorage.getItem('user') == null) {
+      return false
+    } else {
+      this.token = localStorage.getItem('user');
       return true
     }
   }
@@ -29,68 +35,89 @@ export class HomeComponent implements OnInit {
     return this.httpOptions = { headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}` }) }
   };
   searchUsername() {
-    if (this.username == "undefined") {
+    if (this.username == undefined) {
       return;
     } else {
       this._http.get(`http://localhost:3000/api/userName/${this.username}`, this.setAuthHeader()).subscribe(userData => {
         this.data = userData;
         if (this.data.message == "Ok") {
-          console.log(this.data);
+          this.failed = false;
+          this.user=this.data;
+          this.userexists=true;
+          console.log(this.data);;
 
         } else {
+          this.failed = true;
           console.log(this.data.message);
         }
       });
     }
   }
   searchId() {
-    if (this.userId == "undefined") {
+    if (this.userId == undefined) {
       return;
     } else {
       this._http.get(`http://localhost:3000/api/userId/${this.userId}`, this.setAuthHeader()).subscribe(userData => {
         this.data = userData;
         if (this.data.message == "Ok") {
+          this.failed2 = false;
+          this.user=this.data;
+          this.userexists=true;
           console.log(this.data);
 
         } else {
+          this.failed2 = true;
           console.log(this.data.message);
         }
       });
     }
   }
 
-  searchPolicyId(){
-    if (this.policyId == "undefined") {
+  searchPolicyName() {
+    if (this.policyName == undefined) {
       return;
     } else {
-      this._http.get(`http://localhost:3000/api/admin/policies/${this.policyId}`, this.setAuthHeader()).subscribe(userData => {
+      this._http.get(`http://localhost:3000/api/admin/policies/${this.policyName}`, this.setAuthHeader()).subscribe(userData => {
         this.data = userData;
-        if (this.data.message == "Ok") {
+        if (this.data.message == undefined) {
+          this.failed3 = false;
+          this.array=this.data;
           console.log(this.data);
 
         } else {
+          this.failed3 = true;
           console.log(this.data.message);
         }
       });
     }
   }
 
-  searchPolicyName(){
-    if (this.policyName == "undefined") {
+  searchPolicyId() {
+    if (this.policyId == undefined) {
       return;
     } else {
-      this._http.get(`http://localhost:3000/api/admin/users/${this.policyName}`, this.setAuthHeader()).subscribe(userData => {
+      this._http.get(`http://localhost:3000/api/admin/users/${this.policyId}`, this.setAuthHeader()).subscribe(userData => {
         this.data = userData;
         if (this.data.message == "Ok") {
+          this.failed4 = false;
+          this.user=this.data;
+          this.userexists=true;
           console.log(this.data);
 
         } else {
+          this.failed4 = true;
           console.log(this.data.message);
         }
       });
     }
   }
 
+  reset() {
+    this.failed = false;
+    this.failed2 = false;
+    this.failed3 = false;
+    this.failed4 = false;
+  }
   constructor(private _http: HttpClient, private _router: Router) { }
 
   ngOnInit() {

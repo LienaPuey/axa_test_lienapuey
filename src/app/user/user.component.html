@@ -8,3 +8,13 @@
     <button (click)="searchId()" class="btn btn-primary">Search by ID</button>
   </div>
 </div>
+
+<div>
+    <div *ngIf="userexists">
+        <p>Id: {{user.id}}</p>
+        <p>Name: {{user.name}}</p>
+        <p>Email: {{user.email}}</p>
+        <p>Role: {{user.role}}</p>
+      
+      </div>
+</div>

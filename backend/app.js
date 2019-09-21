@@ -117,8 +117,9 @@ app.get('/api/admin/policies/:name', verifyToken, (req, response) => {
                         if (policiesList.length == 0) {
                             response.send({ message: "This user doesn't have any policies." });
                         } else {
-
-                            clientData.message = "Ok";
+                            
+                            
+                            policiesList.message = "Ok";
                             response.send(policiesList);
                         }
                     });
@@ -151,8 +152,11 @@ app.get('/api/admin/users/:policy', verifyToken, (req, response) => {
                         var data = JSON.parse(body);
                         var dataParsed = data.clients;
                         var resultClients = dataParsed.find(element => { return element.id === userData });
+                        resultClients.message = "Ok";
                         response.send(resultClients);
+                        
                     });
+                    
                 }
             });
         }

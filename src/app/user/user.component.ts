@@ -14,7 +14,11 @@ export class UserComponent implements OnInit {
   data: any;
   httpOptions: any;
   token: string;
-
+  failed=false;
+  failed2=false;
+  user;
+  userexists= false;
+  
   checkToken(){
     if(localStorage.getItem('user') == null){
      return false
@@ -33,9 +37,12 @@ export class UserComponent implements OnInit {
       this._http.get(`http://localhost:3000/api/userName/${this.username}`, this.setAuthHeader()).subscribe(userData => {
         this.data = userData;
         if (this.data.message == "Ok") {
+          this.user=this.data;
+          this.userexists=true;
           console.log(this.data);
 
         } else {
+          this.failed = true;
           console.log(this.data.message);
         }
       });
@@ -48,13 +55,21 @@ export class UserComponent implements OnInit {
       this._http.get(`http://localhost:3000/api/userId/${this.userId}`, this.setAuthHeader()).subscribe(userData => {
         this.data = userData;
         if (this.data.message == "Ok") {
+          this.user=this.data;
+          this.userexists=true;
           console.log(this.data);
 
         } else {
+          this.failed2 = true;
           console.log(this.data.message);
         }
       });
     }
+  }
+
+  reset() {
+    this.failed = false;
+    this.failed2 = false;
   }
 
   constructor(private _http: HttpClient, private _router: Router) { }
