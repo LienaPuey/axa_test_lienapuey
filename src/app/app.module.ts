@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { CallsService } from './services/calls.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -9,6 +8,11 @@ import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthGuardGuard } from './auth-guard.guard';
+
+//SERVICES
+import { AuthService } from './services/auth.service';
+import { CallsService } from './services/calls.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,9 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    CallsService
+    CallsService,
+    AuthGuardGuard,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,20 +1,19 @@
 <div class="square">
   <div class="straight">
-    <input [(ngModel)]="username" type="text" name="" id="" placeholder="Username"> <br>
-    <button (click)="searchUsername()" class="btn btn-primary">Search by username</button>
+    <input [(ngModel)]="username" type="text" name="userId" id="" placeholder="Username"> <br>
+    <p *ngIf="failed" style="color: red">This username doesn't exist.</p>
+    <button (click)="SearchUsername()" class="btn btn-primary">Search by username</button>
   </div>
   <div class="straight">
-    <input [(ngModel)]="userId" type="text" name="" id="" placeholder="User ID"> <br>
-    <button (click)="searchId()" class="btn btn-primary">Search by ID</button>
+    <input [(ngModel)]="userId" type="text" name="userId" id="" placeholder="User ID"> <br>
+    <p *ngIf="failed2" style="color: red">This ID doesn't exist.</p>
+    <button (click)="SearchId()" class="btn btn-primary">Search by ID</button>
   </div>
 </div>
 
-<div>
-    <div *ngIf="userexists">
-        <p>Id: {{user.id}}</p>
-        <p>Name: {{user.name}}</p>
-        <p>Email: {{user.email}}</p>
-        <p>Role: {{user.role}}</p>
-      
-      </div>
+<div class="container" *ngIf="userexists">
+  Id: {{callback.id}} <br>
+  Name: {{callback.name}} <br>
+  Role: {{callback.role}} <br>
+  Email: {{callback.email}} <br>
 </div>

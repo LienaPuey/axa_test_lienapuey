@@ -8,12 +8,14 @@ import { CallsService } from '../services/calls.service';
 })
 export class LoginComponent implements OnInit {
 
+//Var DOM manipulation
   failed = false;
   mail: string = "";
 
   SendData() {
 
-    this._calls.sendData(this.mail) ? this.failed = true : this.failed = true;//Revisar
+    this._calls.sendData(this.mail) ? this.failed = true : this.failed = true; //Revisar
+    
   };
 
 

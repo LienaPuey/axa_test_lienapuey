@@ -84,10 +84,6 @@ app.get('/api/clients/:email', verifyToken, (req, response) => {
     });
 });
 
-//Gets list of policies with verification
-app.get('/api/policies', verifyToken, (req, response) => {
-    request.get(api2, (err, res, body) => { response.send(body) });
-});
 
 //ADMIN USAGE 
 //Gets list of policies linked to a user name
