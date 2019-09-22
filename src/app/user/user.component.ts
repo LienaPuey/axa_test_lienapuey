@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { CallsService } from '../services/calls.service';
 
 @Component({
   selector: 'app-user',
@@ -72,7 +72,7 @@ export class UserComponent implements OnInit {
     this.failed2 = false;
   }
 
-  constructor(private _http: HttpClient, private _router: Router) { }
+  constructor(private _http: HttpClient, private _router: Router, private _calls: CallsService) { }
 
   ngOnInit() {
 

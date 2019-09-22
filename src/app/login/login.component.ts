@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-
+import { CallsService } from '../services/calls.service';
 
 @Component({
   selector: 'app-login',
@@ -10,37 +8,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  mail: string="";
-  body:Object = {};
-  apiResult;
-  failed=false;
+  failed = false;
+  mail: string = "";
 
-  sendData() {
-    this.body = { email: this.mail }
-    if (this.mail == "undefined") { return };
-    this._http.post('http://localhost:3000/login', this.body).subscribe(data => {
-      this.apiResult = data;
-      if (this.apiResult.message == "ok") {
-        switch (this.apiResult.role) {
-          case "admin":
-            localStorage.setItem('admin', `${ this.apiResult.token }`)
-            this._router.navigateByUrl('/admin');
-            break;
-          case "user":
-            localStorage.setItem('user', `${ this.apiResult.token }`)
-            this._router.navigateByUrl('/user');
-            break;
-          default:
-            return;
-        }
-      } else {
-        this.failed = true;
-        return;
-      }
-    });
-  }
+  SendData() {
 
-  constructor(private _router: Router, private _http: HttpClient) { }
+    this._calls.sendData(this.mail) ? this.failed = true : this.failed = true;//Revisar
+  };
+
+
+  constructor(private _calls: CallsService) { }
+
 
   ngOnInit() {
   }

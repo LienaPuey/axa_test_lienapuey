@@ -5,5 +5,5 @@
   <label for="inputEmail" class="sr-only">Email</label>
   <input [(ngModel)]= "mail" name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
   <p *ngIf="failed" style="color: red">This user doesn't exist.</p>
-  <button (click)="sendData()" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <button (click)="SendData()" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </div>
