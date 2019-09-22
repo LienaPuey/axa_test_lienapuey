@@ -14,28 +14,24 @@ export class CallsService {
   apiResult;
 
 
+
   sendData(Uemail) {
     this.body = { email: Uemail }
-    if (this.body['email'] == "undefined") {
-      return true;
-    }
     this._http.post('http://localhost:3000/login', this.body).subscribe(data => {
       this.apiResult = data;
       if (this.apiResult.message == "ok") {
         switch (this.apiResult.role) {
           case "admin":
             localStorage.setItem('admin', `${this.apiResult.token}`)
-            this._router.navigateByUrl('/admin');
+
             break;
           case "user":
             localStorage.setItem('user', `${this.apiResult.token}`)
-            this._router.navigateByUrl('/user');
+
             break;
           default:
-            return false;
+            return;
         }
-      } else {
-        return true;
       }
     });
   }
@@ -52,34 +48,16 @@ export class CallsService {
     return this.httpOptions = { headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}` }) }
   };
 
-  //Checks the token 
-  checkToken() {
-    if (localStorage.getItem('user') == null) {
-      return false;
-    } else {
-      this.token = localStorage.getItem('user');
-      return true;
-    }
-  }
+ 
 
   //Search Data by username
   searchUsername(name) {
-    if (name == "undefined") {
-      return;
-    } else {
-      return this._http.get(`http://localhost:3000/api/username/${name}`, this.setAuthHeader())
-        .toPromise().then(resp => { return resp }).catch(err => { return err });
-    }
+    return this._http.get(`http://localhost:3000/api/username/${name}`, this.setAuthHeader())
   }
 
   //
   searchId(userId) {
-    if (userId == "undefined") {
-      return;
-    } else {
-      return this._http.get(`http://localhost:3000/api/userId/${userId}`, this.setAuthHeader())
-        .toPromise().then(resp => { return resp }).catch(err => { return err });
-    }
+    return this._http.get(`http://localhost:3000/api/userId/${userId}`, this.setAuthHeader())
   }
 
 

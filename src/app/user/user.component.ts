@@ -21,13 +21,8 @@ export class UserComponent implements OnInit {
     } else if (this.username.length == 0) {
       return;
     } else {
-      this.user = this._calls.searchUsername(this.username);
-      setTimeout(() => {
-        this.callback = this.user.__zone_symbol__value;
-        if (this.callback.message == "Ok") {
-          this.userexists = true;
-        }
-      }, 1000);
+      this._calls.searchUsername(this.username)
+        .subscribe(res => { this.callback = res; if (this.callback.message == "Ok") this.userexists = true });
     }
   }
 
@@ -37,16 +32,10 @@ export class UserComponent implements OnInit {
     } else if (this.userId.length == 0) {
       return;
     } else {
-      this.user = this._calls.searchUsername(this.userId);
-      setTimeout(() => {
-        this.callback = this.user.__zone_symbol__value;
-        if (this.callback.message == "Ok") {
-          this.userexists = true;
-        }
-      }, 1000);
-    }
 
-    this.user = this._calls.searchId(this.userId);
+      this._calls.searchId(this.userId)
+        .subscribe(res => { this.callback = res; if (this.callback.message == "Ok") this.userexists = true });
+    }
 
   }
 
@@ -58,8 +47,6 @@ export class UserComponent implements OnInit {
   constructor(private _calls: CallsService) { }
 
   ngOnInit() {
-
-    this._calls.checkToken();
 
   }
 

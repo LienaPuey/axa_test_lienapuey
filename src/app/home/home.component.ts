@@ -130,41 +130,7 @@ export class HomeComponent implements OnInit {
     this.failed4 = false;
   }
 
-  // failed = false;
-  // failed2 = false;
-  // failed3 = false;
-  // failed4 = false;
 
-
-  // CheckToken() {
-  //   this._calls.checkToken();
-  // }
-
-  // SetAuthHeader() {
-  //   this._calls.setAuthHeader();
-  // };
-
-  // SearchUsername() {
-  //  this._calls.searchUsername();
-  // }
-
-  // SearchId() {
-  //  this._calls.searchId();
-
-  // }
-
-  // SearchPolicyName() {
-  //   this._calls.searchPolicyName();
-  // }
-
-  // SearchPolicyId() {
-  //   this._calls.searchPolicyId();
-
-  // }
-
-  // Reset() {
-  //   this._calls.reset();
-  // }
   constructor(private _http: HttpClient, private _router: Router, private _calls: CallsService) { }
 
   ngOnInit() {

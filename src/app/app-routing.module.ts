@@ -8,10 +8,12 @@ import { AuthGuardGuard } from './auth-guard.guard';
 //ROUTES
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: '**', component: LoginComponent },//Redirects to the login page when writing something in the url
-  { path: 'login', component: LoginComponent },
-  { path: 'admin', component: HomeComponent, canActivate: [AuthGuardGuard] },//Admin component "home"
-  { path: 'user', component: UserComponent, canActivate: [AuthGuardGuard] }
+  { path: 'user', component: UserComponent, canActivate: [AuthGuardGuard] },
+  { path: 'admin', component: HomeComponent, canActivate: [AuthGuardGuard] },
+  { path: '**', component: LoginComponent }//Redirects to the login page when writing something in the url
+  
+ 
+ 
   
 ];
 
