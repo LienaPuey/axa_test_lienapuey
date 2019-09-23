@@ -9,7 +9,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## Installation
 
-In order to run this project you need to install these libraries whith your CLI:
+In order to run this project you need to install some libraries. To do so enter this commands in your CLI :
 ```
 npm install
 npm start
@@ -25,9 +25,9 @@ npm start
 
 First step you need to take is downloading this repository or cloning it. 
 
-After that, go to your CLI and follow the install instructions below.
+After that, go to your CLI and follow the install instructions above.
 
-Next step is developing the server as below.
+Next step is developing the server as above.
 
 Congratulations, now the app is running.
 
