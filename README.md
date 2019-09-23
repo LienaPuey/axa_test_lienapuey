@@ -1,26 +1,42 @@
-# PruebaLienapuey
+# AXA Test Liena Puey
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+The project also uses Node.js and Express.js
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+In order to run this project you need to install these libraries whith your CLI:
+```
+npm install
+npm start
+```
 
-## Build
+## API Reference
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+[This API contains the clients' data](http://www.mocky.io/v2/5808862710000087232b75ac)
 
-## Running unit tests
+[This API contains the policies' data](http://www.mocky.io/v2/580891a4100000e8242b75c5)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Usage
 
-## Running end-to-end tests
+First step you need to take is downloading this repository or cloning it. 
+After that, go to your CLI and follow the install instructions below.
+Next step is developing the server as below.
+Congratulations, now the app is running.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Next steps:
+
+In order to **sign up** in the app you need to take one **email** from the clients' API. 
+If you sign up with a user email you will be redirected to a user interface and you will be able to access to user's information in two different ways. 
+If you sign up with an admin email you will be redirected to an admin interface and you will be able to access to admin's and user's information and their policies. 
+
+## Requirements not met
+
+With a user's email you can access to admin's interface if you change the path in the url from user to admin. Although your token is a user's role token. This is due to the AuthGuard service that doesn't work as expected.
 
 ## Further help
 
