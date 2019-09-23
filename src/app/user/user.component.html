@@ -1,11 +1,11 @@
 <div class="square">
   <div class="straight">
-    <input [(ngModel)]="username" type="text" name="userId" id="" placeholder="Username"> <br>
+    <input (keypress)="reset()" [(ngModel)]="username" type="text" name="userId" id="" placeholder="Username"> <br>
     <p *ngIf="failed" style="color: red">This username doesn't exist.</p>
     <button (click)="SearchUsername()" class="btn btn-primary">Search by username</button>
   </div>
   <div class="straight">
-    <input [(ngModel)]="userId" type="text" name="userId" id="" placeholder="User ID"> <br>
+    <input (keypress)="reset()" [(ngModel)]="userId" type="text" name="userId" id="" placeholder="User ID"> <br>
     <p *ngIf="failed2" style="color: red">This ID doesn't exist.</p>
     <button (click)="SearchId()" class="btn btn-primary">Search by ID</button>
   </div>
