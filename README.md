@@ -24,15 +24,22 @@ npm start
 ## Usage
 
 First step you need to take is downloading this repository or cloning it. 
+
 After that, go to your CLI and follow the install instructions below.
+
 Next step is developing the server as below.
+
 Congratulations, now the app is running.
+
 
 Next steps:
 
 In order to **sign up** in the app you need to take one **email** from the clients' API. 
+
 If you sign up with a user email you will be redirected to a user interface and you will be able to access to user's information in two different ways. 
+
 If you sign up with an admin email you will be redirected to an admin interface and you will be able to access to admin's and user's information and their policies. 
+
 
 ## Requirements not met
 
