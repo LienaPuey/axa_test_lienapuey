@@ -36,9 +36,9 @@ Next steps:
 
 In order to **sign up** in the app you need to take one **email** from the clients' API. 
 
-If you sign up with a user email you will be redirected to a user interface and you will be able to access to user's information in two different ways. 
+If you sign up with a user email you will be redirected to a user interface and you will be able to access the user's information in two different ways. **You will need to use the client's API to access this information.**
 
-If you sign up with an admin email you will be redirected to an admin interface and you will be able to access to admin's and user's information and their policies. 
+If you sign up with an admin email you will be redirected to an admin interface and you will be able to access the admin's and user's information and their policies. **You will need to use both clients' and policies' APIs to access this information.**
 
 
 ## Requirements not met
