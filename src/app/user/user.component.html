@@ -11,9 +11,11 @@
   </div>
 </div>
 
-<div class="container" *ngIf="userexists">
-  Id: {{callback.id}} <br>
-  Name: {{callback.name}} <br>
-  Role: {{callback.role}} <br>
-  Email: {{callback.email}} <br>
+<div class="results">
+  <div class="items" *ngIf="userexists">
+    ID: {{callback.id}} <br>
+    Name: {{callback.name}} <br>
+    Role: {{callback.role}} <br>
+    Email: {{callback.email}} <br>
+  </div>
 </div>

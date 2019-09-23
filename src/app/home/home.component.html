@@ -3,41 +3,41 @@
   <div class="straight">
     <input (keypress)="reset()" [(ngModel)]="username" type="text" name="username" placeholder="Username"> <br>
     <p *ngIf="failed" style="color: red">This user doesn't exist.</p>
-    <button (click)="searchUsername()" class="btn btn-primary">Search by username</button>
+    <button (click)="SearchUsername()" class="btn btn-primary">Search by username</button>
   </div>
 
   <div class="straight">
     <input (keypress)="reset()" [(ngModel)]="userId" type="text" name="userid" placeholder="User ID"> <br>
     <p *ngIf="failed2" style="color: red">This userID doesn't exist.</p>
-    <button (click)="searchId()" class="btn btn-primary">Search by ID</button>
+    <button (click)="SearchId()" class="btn btn-primary">Search by ID</button>
   </div>
 
   <div class="straight">
     <input (keypress)="reset()" [(ngModel)]="policyName" type="text" name="policiename" placeholder="Username "> <br>
     <p *ngIf="failed3" style="color: red">This user doesn't exist.</p>
-    <button (click)="searchPolicyName()" class="btn btn-primary">Search policies by username</button>
+    <button (click)="SearchPolicyName()" class="btn btn-primary">Search policies by username</button>
   </div>
 
   <div class="straight">
     <input (keypress)="reset()" [(ngModel)]="policyId" type="text" name="userbypolicy" placeholder="Policy number"> <br>
     <p *ngIf="failed4" style="color: red">This policy number doesn't exist.</p>
-    <button (click)="searchPolicyId()" class="btn btn-primary">Search user by policy number</button>
+    <button (click)="SearchPolicyId()" class="btn btn-primary">Search user by policy number</button>
   </div>
 
 </div>
 
-<div>
+<div class="results">
 
-  <div *ngIf="userexists">
-    <p>Id: {{user.id}}</p>
+  <div class="items" *ngIf="userexists">
+    <p>ID: {{user.id}}</p>
     <p>Name: {{user.name}}</p>
     <p>Email: {{user.email}}</p>
     <p>Role: {{user.role}}</p>
 
   </div>
 
-  <div class="array">
-    <div *ngFor="let policy of array; index as i">
+  <div class="arrayCont">
+    <div class="array" *ngFor="let policy of array; index as i">
       <p>Number: {{i+1}}</p>
       <p>ID: {{policy.id}}</p>
       <p>Amount insured: {{policy.amountInsured}}</p>
@@ -48,5 +48,4 @@
     </div>
 
   </div>
-
 </div>

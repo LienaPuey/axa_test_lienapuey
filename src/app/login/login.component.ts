@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   //Var DOM manipulation
   failed = false;
   mail: string = "";
-
+  
   SendData() {
     if (this.mail == undefined) {
       this.failed = true;
@@ -22,15 +22,28 @@ export class LoginComponent implements OnInit {
       this.failed = true;
       return;
     }
-    this._calls.sendData(this.mail);
-    setTimeout(() => {
-      if (localStorage.getItem('user')) {
-        this._router.navigateByUrl('/user');
-      } else if (localStorage.getItem('admin')) {
-        this._router.navigateByUrl('/admin');
-      }
+    this._calls.sendData(this.mail)
+      .subscribe(data => {
 
-    }, 500);
+        if (data['message'] == "ok") {
+          switch (data['role']) {
+            case "admin":
+              localStorage.setItem('admin', `${data['token']}`);
+              this._router.navigateByUrl('/admin');
+
+              break;
+            case "user":
+              localStorage.setItem('user', `${data['token']}`);
+              this._router.navigateByUrl('/user');
+              break;
+            default:
+              return;
+          }
+        } else {
+          this.failed = true;
+        }
+      });
+
 
 
   };
