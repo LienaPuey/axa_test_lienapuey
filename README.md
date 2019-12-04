@@ -25,11 +25,11 @@ npm start
 
 First step you need to take is downloading this repository or cloning it. 
 
-After that, go to your CLI and follow the install instructions above.
+After that, go to your CLI and follow the installation instructions above.
 
 Next step is developing the server as above.
 
-Congratulations, now the app is running.
+Congratulations, now the app is running!
 
 
 Next steps:
