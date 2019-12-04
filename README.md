@@ -40,11 +40,6 @@ If you sign up with a user email you will be redirected to a user interface and 
 
 If you sign up with an admin email you will be redirected to an admin interface and you will be able to access the admin's and user's information and their policies. **You will need to use both clients' and policies' APIs to access this information.**
 
-
-## Requirements not met
-
-With a user's email you can access to admin's interface if you change the path in the url from user to admin. Although your token is a user's role token. This is due to the AuthGuard service that doesn't work as expected.
-
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
